@@ -9,10 +9,10 @@ const {
 } = require("../controllers/productController");
 const validateToken = require('../middleware/validateTokenHandler');
 
-router.use(validateToken);
+// router.use(validateToken);
 
-router.route("/").get(getProducts).post(createProduct);
+router.route("/").get(getProducts).post(validateToken, createProduct);
 
-router.route("/:id").get(getProduct).put(updateProduct).delete(deleteProduct);
+router.route("/:id").get(getProduct).put(validateToken, updateProduct).delete(validateToken, deleteProduct);
 
 module.exports = router;

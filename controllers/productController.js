@@ -1,12 +1,13 @@
 const asyncHandler = require("express-async-handler");
 const Product = require('../models/productModel');
+const User = require('../models/userModel')
 
 // @desc Get all products
 // @route GET /api/products
 // @access public
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products =  await Product.findAll();
+  const products =  await Product.find();
   res.status(200).json(products);
 });
 
@@ -16,7 +17,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const createProduct = asyncHandler(async (req, res) => {
   console.log(req.body);
-  const { name, price, brand, purpose } = req.body;
+  const { name, price, brand, purpose, stock } = req.body;
   if (!name || !price || !brand || !purpose) {
     res.status(400);
     throw new Error("all fields are mandatory");
@@ -27,8 +28,12 @@ const createProduct = asyncHandler(async (req, res) => {
     price,
     brand,
     purpose,
-    user_id: req.user.id
+    stock,
   });
+  const currentUser = await User.findById(req.user.id);
+  currentUser.products.push(product._id);
+  console.log('product id: ', product._id);
+  console.log('current user', currentUser);
   res.status(201).json(product);
 });
 
@@ -37,10 +42,10 @@ const createProduct = asyncHandler(async (req, res) => {
 // @access private
 
 const getProduct = asyncHandler(async (req, res) => {
-  const product = await Productt.findById(req.params.id);
+  const product = await Product.findById(req.params.id);
   if (!product) {
     res.status(404);
-    throw new Error('productt not found');
+    throw new Error('product not found');
   }
   // if (product.user_id.toString() !== req.user.id) {
   //   res.status(403);
@@ -80,16 +85,16 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
+  console.log(product);
   if (!product) {
     res.status(404);
     throw new Error('product not found');
   }
 
-  if (product.user_id.toString() !== req.user.id) {
+  if (!req.user.products.includes(req.params.id)) {
     res.status(403);
     throw new Error('User do not have permission to do that');
   }
-
   await Product.deleteOne({ _id: req.params.id });
 
   res.status(200).json(product);

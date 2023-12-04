@@ -58,7 +58,7 @@ const loginUser = asyncHandler(async (req, res) => {
         },
       }, 
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '10m' }
+      { expiresIn: '100m' }
     );
     res.status(200).json({ accessToken });
   } else {
