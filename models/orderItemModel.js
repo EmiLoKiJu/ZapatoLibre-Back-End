@@ -10,6 +10,10 @@ const orderItemSchema = mongoose.Schema(
       type: Number,
       required: [true, 'Please add the price of the product'],
     },
+    size: {
+      type: Number,
+      required: [true, 'Please add the size of the product'],
+    },
     quantity: {
       type: Number,
       required: [true, 'Please add the quantity of the product'],

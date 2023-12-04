@@ -17,6 +17,18 @@ const productSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add the product purpose'],
     },
+    stock: [
+      {
+        size: {
+          type: String,
+          required: [true, 'Please add the product size'],
+        },
+        quantity: {
+          type: Number,
+          required: [true, 'Please add the quantity of the product in the current size'],
+        },
+      },
+    ],
   },
   {
     timestamps: true,
