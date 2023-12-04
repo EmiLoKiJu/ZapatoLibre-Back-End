@@ -14,6 +14,18 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add the user password'],
     },
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order',
+      },
+    ],
   },
   {
     timestamps: true,
