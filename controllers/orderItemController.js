@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Product = require('../models/productModel');
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const OrderItem = require('../models/orderItemModel');
 
 // @desc Get all products
 // @route GET /api/products
