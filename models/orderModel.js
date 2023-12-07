@@ -8,6 +8,10 @@ const orderSchema = mongoose.Schema(
         ref: 'OrderItem',
       },
     ],
+    completed: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

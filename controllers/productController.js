@@ -66,9 +66,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('product not found');
   }
-  const currentUser = await User.findById(req.user.id);
   
-  if (!currentUser.products.includes(req.params.id)) {
+  if (product.owner_ID !== req.params.id) {
     res.status(403);
     throw new Error('User do not have permission to do that');
   }
@@ -93,12 +92,12 @@ const deleteProduct = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('product not found');
   }
-  const currentUser = await User.findById(req.user.id);
-  
-  if (!currentUser.products.includes(req.params.id)) {
+  if (product.owner_ID !== req.params.id) {
     res.status(403);
     throw new Error('User do not have permission to do that');
   }
+
+  const currentUser = await User.findById(req.user.id);
   await Product.deleteOne({ _id: req.params.id });
   currentUser.splice(currentUser.products.indexOf(req.params.id), 1);
   await currentUser.save();
