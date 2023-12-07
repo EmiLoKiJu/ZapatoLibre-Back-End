@@ -1,8 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Product = require('../models/productModel');
-const User = require('../models/userModel');
 const OrderItem = require('../models/orderItemModel');
-const Order = require('../models/orderModel');
 
 // @desc create new product
 // @route POST /api/products
@@ -43,66 +41,12 @@ const getOrderItem = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('orderItem not found');
   }
-  const product = await Product.findById(orderItem.product_ID);
-  if (!product) {
-    res.status(404);
-    throw new Error('product not found');
-  }
 
-  if (product.user_id.toString() !== req.user.id) {
+  if (orderItem.buyer_ID.toString() !== req.user.id && orderItem.seller_ID.toString() !== req.user.id) {
     res.status(403);
     throw new Error('User do not have permission to do that');
   }
-  res.status(200).json(product);
+  res.status(200).json(orderItem);
 });
 
-// @desc update product
-// @route PUT /api/products/:id
-// @access private
-
-const updateProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  if (!product) {
-    res.status(404);
-    throw new Error('product not found');
-  }
-  const currentUser = await User.findById(req.user.id);
-  
-  if (!currentUser.products.includes(req.params.id)) {
-    res.status(403);
-    throw new Error('User do not have permission to do that');
-  }
-
-  const updatedProduct = await Product.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
-
-  res.status(200).json(updatedProduct);
-});
-
-// @desc delete product
-// @route DELETE /api/products/:id
-// @access private
-
-const deleteProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  console.log(product);
-  if (!product) {
-    res.status(404);
-    throw new Error('product not found');
-  }
-  const currentUser = await User.findById(req.user.id);
-  
-  if (!currentUser.products.includes(req.params.id)) {
-    res.status(403);
-    throw new Error('User do not have permission to do that');
-  }
-  await Product.deleteOne({ _id: req.params.id });
-  currentUser.splice(currentUser.products.indexOf(req.params.id), 1);
-  await currentUser.save();
-  res.status(200).json(product);
-});
-
-module.exports = { createProduct, getProduct, updateProduct, getProducts, deleteProduct };
+module.exports = { createOrderItem, getOrderItem };
