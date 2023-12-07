@@ -24,6 +24,7 @@ const createProduct = asyncHandler(async (req, res) => {
   }
 
   const product = await Product.create({
+    owner_ID: req.user.id,
     name,
     price,
     brand,

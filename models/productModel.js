@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const productSchema = mongoose.Schema(
   {
+    owner_ID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     name: {
       type: String,
       required: [true, 'Please add the product name'],

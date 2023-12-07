@@ -24,32 +24,35 @@ const createOrderItem = asyncHandler(async (req, res) => {
 
   const orderItem = await OrderItem.create({
     product_ID: product._id,
+    buyer_ID: req.user.id,
+    seller_ID: product.owner_ID,
     price: product.price,
     size: product.size,
     quantity: product.quantity
   });
-  const currentUser = await User.findById(req.user.id);
-  currentUser.products.push(product._id);
-  console.log('product id: ', product._id);
-  console.log('current user', currentUser);
-  await currentUser.save();
-  res.status(201).json(product);
+  res.status(201).json(orderItem);
 });
 
 // @desc Get product
 // @route GET /api/products/:id
 // @access private
 
-const getProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+const getOrderItem = asyncHandler(async (req, res) => {
+  const orderItem = await OrderItem.findById(req.params.id);
+  if (!orderItem) {
+    res.status(404);
+    throw new Error('orderItem not found');
+  }
+  const product = await Product.findById(orderItem.product_ID);
   if (!product) {
     res.status(404);
     throw new Error('product not found');
   }
-  // if (product.user_id.toString() !== req.user.id) {
-  //   res.status(403);
-  //   throw new Error('User do not have permission to do that');
-  // }
+
+  if (product.user_id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error('User do not have permission to do that');
+  }
   res.status(200).json(product);
 });
 

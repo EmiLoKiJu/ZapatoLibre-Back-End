@@ -5,6 +5,14 @@ const orderItemSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
     },
+    buyer_ID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    seller_ID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     price: {
       type: Number,
       required: [true, 'Please add the price of the product'],
