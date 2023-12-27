@@ -1,0 +1,1770 @@
+{
+	"info": {
+		"_postman_id": "34b44dbc-9a04-481e-8ea4-e8cd34c012b6",
+		"name": "Testing products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27610988"
+	},
+	"item": [
+		{
+			"name": "Login with newUser2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains a token\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accessToken).to.exist;\r",
+							"    pm.expect(jsonData.accessToken).to.be.a('string');\r",
+							"    var Token = jsonData.accessToken;\r",
+							"    pm.environment.set(\"Token\", Token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"new2@email.com\",\r\n  \"password\":\"asddsa123321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login with gabriel rozas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains a token\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accessToken).to.exist;\r",
+							"    pm.expect(jsonData.accessToken).to.be.a('string');\r",
+							"    var Token = jsonData.accessToken;\r",
+							"    pm.environment.set(\"Token2\", Token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"gabrielrozas1996@gmail.com\",\r\n  \"password\":\"asddsa123321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get products no token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains an empty array\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('array');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 401 no token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 401, unauthorized\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains unauthorized\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Unauthorized');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para uso diario\",\r\n        \"price\": 19.9,\r\n        \"brand\": \"Northstar\",\r\n        \"purpose\": \"Walking\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 5\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 5\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 all fields are mandatory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"namae\": \"Zapatilla Northstar 35-40 para uso diario\",\r\n        \"price\": 19.9,\r\n        \"brand\": \"Northstar\",\r\n        \"purpose\": \"Walking\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 5\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 5\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 no valid type of data string",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": true,\r\n        \"price\": 19.9,\r\n        \"brand\": \"189\",\r\n        \"purpose\": \"true\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 5\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 5\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 no valid type of data number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"true\",\r\n        \"price\": \"19.9\",\r\n        \"brand\": \"189\",\r\n        \"purpose\": \"true\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 5\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 5\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 no valid type of data array of objects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": true,\r\n        \"price\": 19.9,\r\n        \"brand\": \"189\",\r\n        \"purpose\": \"true\",\r\n        \"stock\": {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 no valid type of data quantity with decimals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": true,\r\n        \"price\": 19.9,\r\n        \"brand\": \"189\",\r\n        \"purpose\": \"true\",\r\n        \"stock\": {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2.5\r\n            }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 400 no valid type of data quantity with 0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains bad request\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": true,\r\n        \"price\": 19.9,\r\n        \"brand\": \"189\",\r\n        \"purpose\": \"true\",\r\n        \"stock\": {\r\n                \"size\": \"35\",\r\n                \"quantity\": 0\r\n            }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create product 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains an object\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData._id).to.exist;\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var id = jsonData._id;\r",
+							"pm.environment.set(\"productCreated\", id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para uso diario\",\r\n        \"price\": 19.9,\r\n        \"brand\": \"Northstar\",\r\n        \"purpose\": \"Walking\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 5\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 5\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check user data to confirm product is pushed in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the user with orders array\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.username).to.eql('newUsername2');\r",
+							"    pm.expect(jsonData.products).to.contain(pm.environment.get(\"productCreated\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/users/current",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object created\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData._id).to.eql(pm.environment.get(\"productCreated\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Object created has certain atributes confirmed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.price).to.eql(19.9);\r",
+							"    pm.expect(jsonData.stock[0]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"35\",\r",
+							"        \"quantity\": 2,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[1]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"36\",\r",
+							"        \"quantity\": 3,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[2]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"37\",\r",
+							"        \"quantity\": 1,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[3]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"38\",\r",
+							"        \"quantity\": 1,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[4]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"39\",\r",
+							"        \"quantity\": 5,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[5]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"40\",\r",
+							"        \"quantity\": 5,\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product bad ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = '6574b170848334477ccf5c19'\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains product not found\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Validation Failed');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 401 user not owner",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains unauthorized\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Unauthorized');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 401 no token",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains unauthorized\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Unauthorized');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 404 no valid id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Validation Failed');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products/5689",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products",
+						"5689"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 400 no valid type of data string",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": 200,\r\n        \"price\": 24.9,\r\n        \"purpose\": false,\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 400 no valid type of data number",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": \"24.9\",\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 400 no valid type of data array of objects",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": 35,\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 400 no valid type of data quantity with decimals",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Bad Request');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": 35,\r\n                \"quantity\": 1.5\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 0\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product 200",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object updated\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData._id).to.eql(pm.environment.get(\"productCreated\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Object updated has certain atributes confirmed\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.price).to.eql(24.9);\r",
+							"    pm.expect(jsonData.stock[0]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"35\",\r",
+							"        \"quantity\": 1,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[1]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"36\",\r",
+							"        \"quantity\": 2,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[2]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"37\",\r",
+							"        \"quantity\": 1,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[3]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"38\",\r",
+							"        \"quantity\": 1,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[4]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"39\",\r",
+							"        \"quantity\": 3,\r",
+							"    });\r",
+							"    pm.expect(jsonData.stock[5]).to.contain(\r",
+							"    {\r",
+							"        \"size\": \"40\",\r",
+							"        \"quantity\": 2,\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Zapatilla Northstar 35-40 para todo uso\",\r\n        \"price\": 24.9,\r\n        \"purpose\": \"Multi-purpose\",\r\n        \"stock\": [\r\n            {\r\n                \"size\": \"35\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"36\",\r\n                \"quantity\": 2\r\n            },\r\n            {\r\n                \"size\": \"37\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"38\",\r\n                \"quantity\": 1\r\n            },\r\n            {\r\n                \"size\": \"39\",\r\n                \"quantity\": 3\r\n            },\r\n            {\r\n                \"size\": \"40\",\r\n                \"quantity\": 2\r\n            }\r\n        ]\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product 401 unauthorized",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains unauthorized\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Unauthorized');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product 401 user not owner",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains unauthorized\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.title).to.eql('Unauthorized');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var savedID = pm.environment.get(\"productCreated\");\r",
+							"pm.request.url = 'http://localhost:5173/api/products/' + savedID;"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the object deleted\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.exist;\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData._id).to.eql(pm.environment.get(\"productCreated\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5173/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check user data to confirm product is taken from array",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the user with orders array\", function () {\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.a('object');\r",
+							"    pm.expect(jsonData.username).to.eql('newUsername2');\r",
+							"    pm.expect(jsonData.products).to.not.include(pm.environment.get(\"productCreated\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5173/api/users/current",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5173",
+					"path": [
+						"api",
+						"users",
+						"current"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
